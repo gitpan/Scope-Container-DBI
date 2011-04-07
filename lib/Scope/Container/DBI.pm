@@ -9,7 +9,8 @@ use Data::Dumper;
 use Carp;
 use DBI;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
+our $DBI_CLASS = 'DBI';
 
 sub connect {
     my $class = shift;
@@ -49,9 +50,9 @@ sub connect {
     my $dbh = do {
         if ($INC{'Apache/DBI.pm'} && $ENV{MOD_PERL}) {
             local $DBI::connect_via = 'connect'; # Disable Apache::DBI.
-            DBI->connect( $dsn, $user, $pass, $attr );
+            $DBI_CLASS->connect( $dsn, $user, $pass, $attr );
         } else {
-            DBI->connect( $dsn, $user, $pass, $attr );
+            $DBI_CLASS->connect( $dsn, $user, $pass, $attr );
         }
     };
     croak($DBI::errstr) if !$dbh;
@@ -193,6 +194,22 @@ Scope::Container::DBI doesn't have callback function, but you can set callbacks 
           },
       },
   });
+
+=item USING DBI SUBCLASSES
+
+There is two way of using DBI subclass with Scope::Container::DBI. One is DBI's RootClass attribute, other is $Scope::Container::DBI::DBI_CLASS.
+
+  # use RootClass
+
+  my $dbh = Scope::Container::DBI->connect($dsn, $username, $password, {
+      RootClass => 'MySubDBI',
+  });
+
+  # use $Scope::Container::DBI::DBI_CLASS
+
+  local $Scope::Container::DBI::DBI_CLASS = 'MySubDBI';
+  my $dbh = Scope::Container::DBI->connect($dsn, $username, $password);
+  # ref($dbh) is 'MySubDBI::db'
 
 =back
 
