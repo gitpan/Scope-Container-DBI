@@ -23,13 +23,14 @@ no_index:
     - t
     - xt
 requires:
-  DBI: 1.614
+  DBI: 1.615
   Data::Dumper: 0
   List::Util: 0
   Log::Minimal: 0
   Module::Load: 0
   Scope::Container: 0.04
+  Try::Tiny: 0.11
 resources:
   license: http://dev.perl.org/licenses/
   repository: git://github.com/kazeburo/Scope-Container-DBI.git
-version: 0.06
+version: 0.07
