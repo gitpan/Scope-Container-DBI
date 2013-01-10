@@ -18,6 +18,7 @@ README
 t/00_compile.t
 t/01_basic.t
 t/02_subclass.t
+t/03_err.t
 xt/01_podspell.t
 xt/02_perlcritic.t
 xt/03_pod.t
