@@ -12,7 +12,7 @@ use Module::Load qw/load/;
 use Carp;
 use DBI 1.615;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 our $DBI_CLASS = 'DBI';
 
 sub connect {
@@ -95,6 +95,7 @@ sub _build_dsn_key {
     my @dsn = @_;
     local $Data::Dumper::Terse = 1;
     local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Sortkeys = 1;
     my $key = Data::Dumper::Dumper(\@dsn);
     "sc:dbix:".$key;
 }
